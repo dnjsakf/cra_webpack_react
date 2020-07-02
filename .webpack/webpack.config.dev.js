@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = merge(config, {
   mode: "development",
+  devtool: 'inline-source-map',
   plugins: [
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(false),
@@ -16,6 +17,15 @@ module.exports = merge(config, {
       DEBUG: 1
     }),
   ],
+  module:{
+    rules: [
+      {
+        test: /\.(js|jsx|tsx|ts)?$/,
+        include: /node_modules/,
+        use: ['react-hot-loader/webpack'],
+      },
+    ]
+  },
   optimization: {
     namedChunks: true,
   },

@@ -8,11 +8,13 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
-  mode: "none",
   entry: {
-    app: path.join(__dirname, "../js/index.js"),
+    app: [
+      '@babel/polyfill',
+      path.join(__dirname, "../src/index.js")
+    ],
     vendor: [
-      '@babel/polyfill'
+      'react', 'react-dom'
     ]
   },
   output: {
