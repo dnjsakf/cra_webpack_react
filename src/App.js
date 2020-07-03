@@ -1,7 +1,7 @@
-import React from 'react';
-
-import Counter from './components/Counter/Counter';
+import React, { Suspense } from 'react';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+
+const Counter = React.lazy(()=> import('./components/Counter/Counter'));
 
 class App extends React.Component {
   constructor(props){
@@ -80,12 +80,14 @@ class App extends React.Component {
         <h3>Hello, Webpack!!!</h3>
         <div>
           <ErrorBoundary>
-            <Counter
-              id="throw_error"
-              onClick={ this.handleToggle }
-            >
-              ErrorEvent
-            </Counter>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Counter
+                id="throw_error"
+                onClick={ this.handleToggle }
+              >
+                ErrorEvent
+              </Counter>
+            </Suspense>
           </ErrorBoundary>
         </div>
       </>

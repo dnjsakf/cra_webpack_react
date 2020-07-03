@@ -11,7 +11,8 @@ module.exports = {
   entry: {
     app: [
       '@babel/polyfill',
-      path.join(__dirname, "../src/index.js")
+      path.join(__dirname, "../src/index.js"),
+      path.join(__dirname, "../src/style.css"),
     ],
     vendor: [
       'react', 'react-dom'
@@ -21,6 +22,7 @@ module.exports = {
     filename: "[name].bundle.js",
     path: path.join(__dirname, "../dist"),
     publicPath: "/public/",
+    chunkFilename: '[name].chunk.js',
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -60,7 +62,7 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks: 'async',
+      chunks: 'all',
       minSize: 30000,
       maxSize: 0,
       minChunks: 1,
