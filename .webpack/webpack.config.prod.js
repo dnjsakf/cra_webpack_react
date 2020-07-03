@@ -3,8 +3,6 @@ const config = require("./webpack.config.js");
 const merge = require("webpack-merge");
 const webpack = require("webpack");
 
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -26,7 +24,7 @@ module.exports = merge(config, {
     new CopyPlugin({
       patterns: [
         {
-          from: "public",
+          from: "src/public",
           to: "public",
           globOptions: {
             ignore: [

@@ -1,8 +1,15 @@
 import React, { Suspense } from 'react';
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
-const Counter = React.lazy(()=> import('./components/Counter/Counter'));
+/* Layouts */
+const RouteWithLayout = React.lazy(()=>import('./layouts/RouteWithLayout'));
+const MainLayout = React.lazy(()=>import('./layouts/Main'));
 
+/* Views */
+const HomeView = React.lazy(()=>import('./views/Home'));
+const NotFoundView = React.lazy(()=>import('./views/NotFound'));
+
+/* Component */
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -76,21 +83,26 @@ class App extends React.Component {
 
   render(){
     return (
-      <>
-        <h3>Hello, Webpack!!!</h3>
-        <div>
-          <ErrorBoundary>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Counter
-                id="throw_error"
-                onClick={ this.handleToggle }
-              >
-                ErrorEvent
-              </Counter>
-            </Suspense>
-          </ErrorBoundary>
-        </div>
-      </>
+      <Suspense fallback={<div>App Loading...</div>}>
+        <Switch>
+          <Redirect
+            exact
+            from="/"
+            to="/home"
+          />
+          <RouteWithLayout
+            path="/home"
+            layout={ MainLayout }
+            component={ HomeView }
+          />
+          <Route
+            path="/not-found"
+            exact
+            component={ NotFoundView }
+          />
+          <Redirect to="/not-found" />
+        </Switch>
+      </Suspense>
     )
   }
 }
